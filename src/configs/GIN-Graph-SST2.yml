@@ -1,0 +1,37 @@
+data_config:
+  batch_size: 128
+
+model_config:
+  model_name: GIN
+  hidden_size: 64
+  n_layers: 2
+  dropout_p: 0.3
+  pretrain_lr: 1.0e-3
+  pretrain_epochs: 100
+
+shared_config:
+  learn_edge_att: true
+  precision_k: 5
+  num_viz_samples: 8
+  viz_interval: 10
+  viz_norm_att: true
+  extractor_dropout_p: 0.5
+
+GSAT_config:
+  method_name: 'GSAT'
+  pred_loss_coef: 1
+  info_loss_coef: 1
+  epochs: 100
+  lr: 1.0e-3
+
+  from_scratch: true
+  fix_r: false
+  decay_interval: 10
+  decay_r: 0.1
+  final_r: 0.7
+
+  # from_scratch: true
+  # fix_r: false
+  # decay_interval: 5
+  # decay_r: 0.1
+  # final_r: 0.5

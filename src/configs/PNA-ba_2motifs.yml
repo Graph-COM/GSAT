@@ -1,0 +1,44 @@
+data_config:
+  splits:
+    train: 0.8
+    valid: 0.1
+    test: 0.1
+  batch_size: 128
+
+model_config:
+  model_name: PNA
+  hidden_size: 80
+  n_layers: 4
+  dropout_p: 0.3
+  aggregators:
+    - mean
+    - min
+    - max
+    - std
+    - sum
+  scalers: false
+  pretrain_lr: 0.001
+  pretrain_epochs: 50
+  pretrain_wd: 3.0e-6
+
+shared_config:
+  learn_edge_att: true
+  precision_k: 5
+  num_viz_samples: 8
+  viz_interval: 10
+  viz_norm_att: true
+  extractor_dropout_p: 0.5
+
+GSAT_config:
+  method_name: 'GSAT'
+  pred_loss_coef: 1
+  info_loss_coef: 1
+  epochs: 50
+  lr: 1.0e-3
+  weight_decay: 3.0e-6
+
+  from_scratch: true
+  fix_r: false
+  decay_interval: 5
+  decay_r: 0.1
+  final_r: 0.5

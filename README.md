@@ -39,24 +39,24 @@ All settings can be found in `./src/configs`.
 
 # Instructions for Acquiring Datasets
 - Ba_2Motifs
-    - Raw data files can be downloaded automatically
+    - Raw data files can be downloaded automatically, provided by [PGExplainer](https://arxiv.org/abs/2011.04573) and [DIG](https://github.com/divelab/DIG).
 
 - Spurious-Motif
-    - Raw data files can be generated automatically
+    - Raw data files can be generated automatically, provide by [DIR](https://openreview.net/forum?id=hGXij5rfiHw).
 
 - OGBG-Mol
-    - Raw data files can be downloaded automatically
+    - Raw data files can be downloaded automatically, provided by [OGBG](https://ogb.stanford.edu/).
 
 - Mutag
-    - Raw data files need to be downloaded [here](https://github.com/flyingdoog/PGExplainer/tree/master/dataset), provided by PGExplainer.
-    - Unzip `Mutagenicity.zip` and `Mutagenicity.pkl.zip`
-    - Put the raw data files in `./data/mutag/raw`
+    - Raw data files need to be downloaded [here](https://github.com/flyingdoog/PGExplainer/tree/master/dataset), provided by [PGExplainer](https://arxiv.org/abs/2011.04573).
+    - Unzip `Mutagenicity.zip` and `Mutagenicity.pkl.zip`.
+    - Put the raw data files in `./data/mutag/raw`.
 
 - Graph-SST2
-    - Raw data files need to be downloaded [here](https://drive.google.com/drive/folders/1dt0aGMBvCEUYzaG00TYu1D03GPO7305z), provided by DIG.
-    - Unzip the downloaded `Graph-SST2.zip`
-    - Put the raw data files in `./data/Graph-SST2/raw`
+    - Raw data files need to be downloaded [here](https://drive.google.com/drive/folders/1dt0aGMBvCEUYzaG00TYu1D03GPO7305z), provided by [DIG](https://github.com/divelab/DIG).
+    - Unzip the downloaded `Graph-SST2.zip`.
+    - Put the raw data files in `./data/Graph-SST2/raw`.
 
 - MNIST-75sp
     - Raw data files need to be generated following the instruction [here](https://github.com/bknyaz/graph_attention_pool/blob/master/scripts/mnist_75sp.sh).
-    - Put the generated files in `./data/mnist/raw`
+    - Put the generated files in `./data/mnist/raw`.

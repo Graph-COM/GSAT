@@ -1,5 +1,5 @@
 # GSAT
-The implementation of Graph Stochastic Attention (GSAT).
+The implementation of Graph Stochastic Attention (GSAT) for our paper: [Interpretable and Generalizable Graph Learning via Stochastic Attention Mechanism](https://arxiv.org/abs/2201.12987).
 
 # Requirements
 Our code is developed on `Python 3.8.12` and we show the detailed requirements in `./requirements.txt`. The key external packages used are:

@@ -19,6 +19,8 @@ init_metric_dict = {'metric/best_clf_epoch': 0, 'metric/best_clf_valid_loss': 0,
 def process_data(data, use_edge_attr):
     if not use_edge_attr:
         data.edge_attr = None
+    if data.get('edge_label', None) is None:
+        data.edge_label = torch.zeros(data.edge_index.shape[1])
     return data
 
 
@@ -66,6 +68,7 @@ def set_seed(seed):
     np.random.seed(seed)
     torch.manual_seed(seed)
     torch.cuda.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
     torch.backends.cudnn.benchmark = False
     torch.backends.cudnn.deterministic = True
 

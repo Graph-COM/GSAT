@@ -30,14 +30,14 @@ def get_data_loaders(data_dir, dataset_name, batch_size, splits, random_state, m
     elif 'ogbg' in dataset_name:
         dataset = PygGraphPropPredDataset(root=data_dir, name='-'.join(dataset_name.split('_')))
         split_idx = dataset.get_idx_split()
-        print('[INFO] Using given splits!')
+        print('[INFO] Using default splits!')
         loaders, test_set = get_loaders_and_test_set(batch_size, dataset=dataset, split_idx=split_idx)
         train_set = dataset[split_idx['train']]
 
     elif dataset_name == 'Graph-SST2':
         dataset = graph_sst2.get_dataset(dataset_dir=data_dir, dataset_name='Graph-SST2', task=None)
         dataloader, (train_set, valid_set, test_set) = graph_sst2.get_dataloader(dataset, batch_size=batch_size, degree_bias=True, seed=random_state)
-        print('[INFO] Using given splits!')
+        print('[INFO] Using default splits!')
         loaders = {'train': dataloader['train'], 'valid': dataloader['eval'], 'test': dataloader['test']}
         test_set = dataset  # used for visualization
 
@@ -46,7 +46,7 @@ def get_data_loaders(data_dir, dataset_name, batch_size, splits, random_state, m
         train_set = SPMotif(root=data_dir / dataset_name, b=b, mode='train')
         valid_set = SPMotif(root=data_dir / dataset_name, b=b, mode='val')
         test_set = SPMotif(root=data_dir / dataset_name, b=b, mode='test')
-        print('[INFO] Using given splits!')
+        print('[INFO] Using default splits!')
         loaders, test_set = get_loaders_and_test_set(batch_size, dataset_splits={'train': train_set, 'valid': valid_set, 'test': test_set})
 
     elif dataset_name == 'mnist':
@@ -58,7 +58,7 @@ def get_data_loaders(data_dir, dataset_name, batch_size, splits, random_state, m
         train_set, valid_set = train_val[:n_train_data], train_val[-n_val_data:]
         test_set = MNIST75sp(data_dir / 'mnist', mode='test')
         loaders, test_set = get_loaders_and_test_set(batch_size, dataset_splits={'train': train_set, 'valid': valid_set, 'test': test_set})
-        print('[INFO] Using given splits!')
+        print('[INFO] Using default splits!')
 
     x_dim = test_set[0].x.shape[1]
     edge_attr_dim = 0 if test_set[0].edge_attr is None else test_set[0].edge_attr.shape[1]

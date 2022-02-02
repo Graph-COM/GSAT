@@ -116,9 +116,6 @@ class GSAT(nn.Module):
             data = process_data(data, use_edge_attr)
             att, loss_dict, clf_logits = run_one_batch(data.to(self.device), epoch)
 
-            if data.get('edge_label', None) is None:
-                data.edge_label = torch.zeros(data.edge_index.shape[1]).to(self.device)
-
             exp_labels = data.edge_label.data.cpu()
             precision_at_k = self.get_precision_at_k(att, exp_labels, self.k, data.batch, data.edge_index)
             desc, _, _, _, _, _ = self.log_epoch(epoch, phase, loss_dict, exp_labels, att, precision_at_k,
@@ -288,7 +285,7 @@ class GSAT(nn.Module):
         imgs = np.stack(imgs)
         self.writer.add_images(tag, imgs, epoch, dataformats='NHWC')
 
-    def get_r(self, decay_interval, decay_r, current_epoch, init_r=0.9, final_r=0.1):
+    def get_r(self, decay_interval, decay_r, current_epoch, init_r=0.9, final_r=0.5):
         r = init_r - current_epoch // decay_interval * decay_r
         if r < final_r:
             r = final_r

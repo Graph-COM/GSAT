@@ -1,5 +1,10 @@
 # GSAT
-The implementation of Graph Stochastic Attention (GSAT) for our paper: [Interpretable and Generalizable Graph Learning via Stochastic Attention Mechanism](https://arxiv.org/abs/2201.12987).
+The official implementation of Graph Stochastic Attention (GSAT) for our paper: [Interpretable and Generalizable Graph Learning via Stochastic Attention Mechanism](https://arxiv.org/abs/2201.12987).
+
+## Overview
+Commonly used attention mechanisms do not impose any constraints during training, and thus may lack interpretability. GSAT is a novel attention mechanism to build interpretable graph learning models. It injects stochasticity to learn attention, where a higher attention weight means a higher probability of the corresponding edge being kept during training. Such a mechanism will learn higher attention weights for edges that are more important for prediction accuracy, which provides interpretability. To further improve the interpretability for graph learning tasks and avoid trivial solutions, we derive regularization terms for GSAT based on the information bottleneck (IB) principle. As a by-product, IB also helps model generalization.
+![GSAT](./data/arch.png)
+
 
 # Requirements
 Our code is developed on `Python 3.8.12` and we show the detailed requirements in `./requirements.txt`. The key external packages used are:
@@ -10,8 +15,14 @@ torch==1.9.0
 torch_geometric==2.0.2
 ```
 
+# Run Examples
+We provide examples with minimal code to run GSAT in `./example/example.ipynb`. We have tested the provided examples on `Ba-2Motifs (GIN)`, `Mutag (GIN)`  and `OGBG-Molhiv (PNA)`.
 
-# Run Code
+It should be able to run on other datasets as well, but we have not tested them. To reproduce results for other datasets, please follow the instructions in the following section.
+
+# Reproduce Results
+We provide the source code to reproduce the results in our paper.
+
 To pre-train a classifier:
 ```
 cd ./src
@@ -21,20 +32,21 @@ python pretrain_clf.py --dataset [dataset_name] --backbone [model_name] --cuda [
 To train GSAT:
 ```
 cd ./src
-python gsat.py --dataset [dataset_name] --backbone [model_name] --cuda [GPU_id]
+python run_gsat.py --dataset [dataset_name] --backbone [model_name] --cuda [GPU_id]
 ```
 
 `dataset_name` can be choosen from `ba_2motifs`, `mutag`, `mnist`, `Graph-SST2`, `spmotif_0.5`, `spmotif_0.7`, `spmotif_0.9`, `ogbg_molhiv`, `ogbg_moltox21`, `ogbg_molbace`, `ogbg_molbbbp`, `ogbg_molclintox`, `ogbg_molsider`.
 
 `model_name` can be choosen from `GIN`, `PNA`.
 
-# Training Logs
+
+## Training Logs
 Standard output provides basic training logs, while more detailed logs and interpretation visualizations can be found on tensorboard:
 ```
 tensorboard --logdir=./data/[dataset_name]/logs
 ```
 
-# Hyperparameter Settings
+## Hyperparameter Settings
 All settings can be found in `./src/configs`.
 
 # Instructions for Acquiring Datasets

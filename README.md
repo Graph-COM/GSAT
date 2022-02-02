@@ -4,8 +4,8 @@ The official implementation of Graph Stochastic Attention (GSAT) for our paper: 
 ## Overview
 Commonly used attention mechanisms do not impose any constraints during training, and thus may lack interpretability. GSAT is a novel attention mechanism to build interpretable graph learning models. It injects stochasticity to learn attention, where a higher attention weight means a higher probability of the corresponding edge being kept during training. Such a mechanism will learn higher attention weights for edges that are more important for prediction accuracy, which provides interpretability. To further improve the interpretability for graph learning tasks and avoid trivial solutions, we derive regularization terms for GSAT based on the information bottleneck (IB) principle. As a by-product, IB also helps model generalization. Figure 1 shows the architecture of GSAT.
 
-<center><img src="./data/arch.png" width=85% height=85%></center>
-<center><em>Figure 1.</em> The architecture of GSAT.</center>
+<p align="center"><img src="./data/arch.png" width=85% height=85%></p>
+<p align="center"><em>Figure 1.</em> The architecture of GSAT.</p>
 
 # Requirements
 Our code is developed on `Python 3.8.12` and we show the detailed requirements in `./requirements.txt`. The key external packages used are:

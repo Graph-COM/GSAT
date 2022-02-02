@@ -2,17 +2,18 @@ import sys
 sys.path.append('../src')
 
 import torch
-from tqdm import tqdm
-from utils import process_data, get_preds, save_checkpoint
-from ogb.graphproppred import Evaluator
 import numpy as np
-from sklearn.metrics import roc_auc_score
-import matplotlib.pyplot as plt
-from torch_geometric.loader import DataLoader
-from rdkit import Chem
-from torch_geometric.utils import subgraph, to_networkx
-import networkx as nx
 from torch_geometric.data import Data
+from torch_geometric.loader import DataLoader
+from torch_geometric.utils import subgraph, to_networkx
+
+from tqdm import tqdm
+import networkx as nx
+from rdkit import Chem
+import matplotlib.pyplot as plt
+from ogb.graphproppred import Evaluator
+from sklearn.metrics import roc_auc_score
+from utils import process_data, get_preds, save_checkpoint
 
 
 @torch.no_grad()

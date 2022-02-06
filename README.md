@@ -1,8 +1,8 @@
 # GSAT
 The official implementation of Graph Stochastic Attention (GSAT) for our paper: [Interpretable and Generalizable Graph Learning via Stochastic Attention Mechanism](https://arxiv.org/abs/2201.12987).
 
-## Overview
-Commonly used attention mechanisms do not impose any constraints during training, and thus may lack interpretability. GSAT is a novel attention mechanism to build interpretable graph learning models. It injects stochasticity to learn attention, where a higher attention weight means a higher probability of the corresponding edge being kept during training. Such a mechanism will learn higher attention weights for edges that are more important for prediction accuracy, which provides interpretability. To further improve the interpretability for graph learning tasks and avoid trivial solutions, we derive regularization terms for GSAT based on the information bottleneck (IB) principle. As a by-product, IB also helps model generalization. Figure 1 shows the architecture of GSAT.
+## Introduction
+Commonly used attention mechanisms do not impose any constraints during training, and thus may lack interpretability. GSAT is a novel attention mechanism to build interpretable graph learning models. It injects stochasticity to learn attention, where a higher attention weight means a higher probability of the corresponding edge being kept during training. Such a mechanism will push the model to learn higher attention weights for edges that are important for prediction accuracy, which provides interpretability. To further improve the interpretability for graph learning tasks and avoid trivial solutions, we derive regularization terms for GSAT based on the information bottleneck (IB) principle. As a by-product, IB also helps model generalization. Figure 1 shows the architecture of GSAT.
 
 <p align="center"><img src="./data/arch.png" width=85% height=85%></p>
 <p align="center"><em>Figure 1.</em> The architecture of GSAT.</p>
@@ -39,6 +39,8 @@ python run_gsat.py --dataset [dataset_name] --backbone [model_name] --cuda [GPU_
 `dataset_name` can be choosen from `ba_2motifs`, `mutag`, `mnist`, `Graph-SST2`, `spmotif_0.5`, `spmotif_0.7`, `spmotif_0.9`, `ogbg_molhiv`, `ogbg_moltox21`, `ogbg_molbace`, `ogbg_molbbbp`, `ogbg_molclintox`, `ogbg_molsider`.
 
 `model_name` can be choosen from `GIN`, `PNA`.
+
+`GPU_id` is the id of the GPU to use. To use CPU, please set it to `-1`.
 
 
 ## Training Logs

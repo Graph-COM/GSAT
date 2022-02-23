@@ -7,13 +7,20 @@ Commonly used attention mechanisms do not impose any constraints during training
 <p align="center"><img src="./data/arch.png" width=85% height=85%></p>
 <p align="center"><em>Figure 1.</em> The architecture of GSAT.</p>
 
-# Requirements
-Our code is developed on `Python 3.8.12` and we show the detailed requirements in `./requirements.txt`. The key external packages used are:
+# Installation
+We have tested our code on `Python 3.9` with `PyTorch 1.10.0`, `PyG 2.0.3` and `CUDA 11.3`. Please follow the following steps to create a virtual environment and install the required packages.
+
+Create a virtual environment:
 ```
-ogb==1.3.2
-tensorboard==2.7.0
-torch==1.9.0
-torch_geometric==2.0.2
+conda create --name gsat python=3.9
+conda activate gsat
+```
+
+Install dependencies:
+```
+conda install -y pytorch=1.10.0 torchvision cudatoolkit=11.3 -c pytorch
+pip install torch-scatter==2.0.9 torch-sparse==0.6.12 torch-cluster==1.5.9 torch-spline-conv==1.2.1 torch-geometric==2.0.3 -f https://data.pyg.org/whl/torch-1.10.0+cu113.html
+pip install -r requirements.txt
 ```
 
 # Run Examples
@@ -52,6 +59,9 @@ tensorboard --logdir=./data/[dataset_name]/logs
 ## Hyperparameter Settings
 All settings can be found in `./src/configs`.
 
+
+
+
 # Instructions for Acquiring Datasets
 - Ba_2Motifs
     - Raw data files can be downloaded automatically, provided by [PGExplainer](https://arxiv.org/abs/2011.04573) and [DIG](https://github.com/divelab/DIG).
@@ -75,3 +85,7 @@ All settings can be found in `./src/configs`.
 - MNIST-75sp
     - Raw data files need to be generated following the instruction [here](https://github.com/bknyaz/graph_attention_pool/blob/master/scripts/mnist_75sp.sh).
     - Put the generated files in `./data/mnist/raw`.
+
+# FAQ
+#### Does GSAT encourage sparsity?
+No, GSAT doesn't encourage generating sparse subgraphs. We find `r = 0.7` (Eq.9 in our paper) can generally work well for all datasets in our experiments, which means during training roughly `70%` of edges will be kept (kind of still dense). This is because GSAT doesn't try to provide interpretability by finding a small/sparse subgraph of the original input graph (this is what previous works normally do). Instead, it provides interpretability by pushing the critical edges to have relatively lower stochasticity during training.

@@ -18,15 +18,23 @@ conda activate gsat
 
 Install dependencies:
 ```
-conda install -y pytorch=1.10.0 torchvision cudatoolkit=11.3 -c pytorch
+conda install -y pytorch==1.10.0 torchvision cudatoolkit=11.3 -c pytorch
 pip install torch-scatter==2.0.9 torch-sparse==0.6.12 torch-cluster==1.5.9 torch-spline-conv==1.2.1 torch-geometric==2.0.3 -f https://data.pyg.org/whl/torch-1.10.0+cu113.html
 pip install -r requirements.txt
 ```
 
+In case a lower CUDA version is required, please use the following command to install dependencies:
+```
+conda install -y pytorch==1.9.0 torchvision==0.10.0 torchaudio==0.9.0 cudatoolkit=10.2 -c pytorch
+pip install torch-scatter==2.0.9 torch-sparse==0.6.12 torch-cluster==1.5.9 torch-spline-conv==1.2.1 torch-geometric==2.0.3 -f https://data.pyg.org/whl/torch-1.9.0+cu102.html
+pip install -r requirements.txt
+```
+
+
 # Run Examples
 We provide examples with minimal code to run GSAT in `./example/example.ipynb`. We have tested the provided examples on `Ba-2Motifs (GIN)`, `Mutag (GIN)`  and `OGBG-Molhiv (PNA)`.
 
-It should be able to run on other datasets as well, but we have not tested them. To reproduce results for other datasets, please follow the instructions in the following section.
+It should be able to run on other datasets as well, but some hard-coded hyperparameters might need to be changed accordingly. To reproduce results for other datasets, please follow the instructions in the following section.
 
 # Reproduce Results
 We provide the source code to reproduce the results in our paper.

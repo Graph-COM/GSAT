@@ -97,3 +97,9 @@ All settings can be found in `./src/configs`.
 # FAQ
 #### Does GSAT encourage sparsity?
 No, GSAT doesn't encourage generating sparse subgraphs. We find `r = 0.7` (Eq.9 in our paper) can generally work well for all datasets in our experiments, which means during training roughly `70%` of edges will be kept (kind of still dense). This is because GSAT doesn't try to provide interpretability by finding a small/sparse subgraph of the original input graph (this is what previous works normally do). Instead, it provides interpretability by pushing the critical edges to have relatively lower stochasticity during training.
+
+#### Can you show an example of how GSAT works?
+Below we show an example from the `ba_2motifs` dataset, which is to distinguish five-node cycle motifs (left) and house motifs (right).
+To make good predictions (minimize the cross-entropy loss), GSAT will push the attention weights of those critical edges to be relatively large (ideally close to `1`). Otherwise, those critical edges may be dropped too frequently and thus result in a large cross-entropy loss. Meanwhile, to minimize the regularization loss (the KL divergence term in Eq.(9) of the paper), GSAT will push the attention weights of other non-critical edges to be close to `r`, which is set to be `0.7` in the example. This mechanism of injecting stochasticity makes the learned attention weights from GSAT directly interpretable, since the more critical an edge is, the larger its attention weight will be (the less likely it can be dropped).
+<p align="center"><img src="./data/example.png" width=85% height=85%></p>
+<p align="center"><em>Figure 2.</em> An example of the learned attention weights.</p>

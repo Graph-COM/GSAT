@@ -1,5 +1,5 @@
 # Graph Stochastic Attention (GSAT)
-The official implementation of Graph Stochastic Attention (GSAT) for our paper: [Interpretable and Generalizable Graph Learning via Stochastic Attention Mechanism](https://arxiv.org/abs/2201.12987), to appear in ICML 2022.
+The official implementation of GSAT for our paper: [Interpretable and Generalizable Graph Learning via Stochastic Attention Mechanism](https://arxiv.org/abs/2201.12987), to appear in ICML 2022.
 
 ## Introduction
 Commonly used attention mechanisms do not impose any constraints during training (besides normalization), and thus may lack interpretability. GSAT is a novel attention mechanism for building interpretable graph learning models. It injects stochasticity to learn attention, where a higher attention weight means a higher probability of the corresponding edge being kept during training. Such a mechanism will push the model to learn higher attention weights for edges that are important for prediction accuracy, which provides interpretability. To further improve the interpretability for graph learning tasks and avoid trivial solutions, we derive regularization terms for GSAT based on the information bottleneck (IB) principle. As a by-product, IB also helps model generalization. Fig. 1 shows the architecture of GSAT.
@@ -101,7 +101,7 @@ No, GSAT doesn't encourage generating sparse subgraphs. We find `r = 0.7` (Eq.(9
 #### How to choose the value of `r`?
 A grid search in `[0.5, 0.6, 0.7, 0.8, 0.9]` is recommended, but `r = 0.7` is a good starting point. Note that in practice we would decay the value of `r` gradually during training from `0.9` to the chosen value.
 
-#### `p` or `α` in Eq.(9)?
+#### `p` or `α` to implement Eq.(9)?
 Recall in Fig. 1, `p` is the probability of dropping an edge, while `α` is the sampled result from `Bern(p)`. In our provided implementation, as an empirical choice, `α` is used to implement Eq.(9) (the Gumbel-softmax trick makes `α` essentially continuous in practice). We find that when `α` is used it may provide more regularization and makes the model more robust to hyperparameters. Nonetheless, using `p` can achieve the same performance, but it needs some more tuning.
 
 #### Can you show an example of how GSAT works?
@@ -110,3 +110,16 @@ To make good predictions (minimize the cross-entropy loss), GSAT will push the a
 
 <p align="center"><img src="./data/example.png" width=85% height=85%></p>
 <p align="center"><em>Figure 2.</em> An example of the learned attention weights.</p>
+
+
+# Reference
+
+If you find our paper and repo useful, please cite our paper:
+```
+@article{miao2022interpretable,
+  title={Interpretable and Generalizable Graph Learning via Stochastic Attention Mechanism},
+  author={Miao, Siqi and Liu, Miaoyuan and Li, Pan},
+  journal={arXiv preprint arXiv:2201.12987},
+  year={2022}
+}
+```

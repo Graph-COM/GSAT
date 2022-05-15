@@ -7,7 +7,7 @@ Commonly used attention mechanisms do not impose any constraints during training
 <p align="center"><img src="./data/arch.png" width=85% height=85%></p>
 <p align="center"><em>Figure 1.</em> The architecture of GSAT.</p>
 
-# Installation
+## Installation
 We have tested our code on `Python 3.9` with `PyTorch 1.10.0`, `PyG 2.0.3` and `CUDA 11.3`. Please follow the following steps to create a virtual environment and install the required packages.
 
 Create a virtual environment:
@@ -31,12 +31,12 @@ pip install -r requirements.txt
 ```
 
 
-# Run Examples
+## Run Examples
 We provide examples with minimal code to run GSAT in `./example/example.ipynb`. We have tested the provided examples on `Ba-2Motifs (GIN)`, `Mutag (GIN)`  and `OGBG-Molhiv (PNA)`. Yet, to implement GSAT* one needs to load a pre-trained model first in the provided example.
 
 It should be able to run on other datasets as well, but some hard-coded hyperparameters might need to be changed accordingly. To reproduce results for other datasets, please follow the instructions in the following section.
 
-# Reproduce Results
+## Reproduce Results
 We provide the source code to reproduce the results in our paper. The results of GSAT can be reproduced by running `run_gsat.py`. To reproduce GSAT*, one needs to run `pretrain_clf.py` first and change the configuration file accordingly (`from_scratch: false`).
 
 To pre-train a classifier:
@@ -58,19 +58,17 @@ python run_gsat.py --dataset [dataset_name] --backbone [model_name] --cuda [GPU_
 `GPU_id` is the id of the GPU to use. To use CPU, please set it to `-1`.
 
 
-## Training Logs
+### Training Logs
 Standard output provides basic training logs, while more detailed logs and interpretation visualizations can be found on tensorboard:
 ```
 tensorboard --logdir=./data/[dataset_name]/logs
 ```
 
-## Hyperparameter Settings
+### Hyperparameter Settings
 All settings can be found in `./src/configs`.
 
 
-
-
-# Instructions for Acquiring Datasets
+## Instructions on Acquiring Datasets
 - Ba_2Motifs
     - Raw data files can be downloaded automatically, provided by [PGExplainer](https://arxiv.org/abs/2011.04573) and [DIG](https://github.com/divelab/DIG).
 
@@ -94,7 +92,7 @@ All settings can be found in `./src/configs`.
     - Raw data files need to be generated following the instruction [here](https://github.com/bknyaz/graph_attention_pool/blob/master/scripts/mnist_75sp.sh).
     - Put the generated files in `./data/mnist/raw`.
 
-# FAQ
+## FAQ
 #### Does GSAT encourage sparsity?
 No, GSAT doesn't encourage generating sparse subgraphs. We find `r = 0.7` (Eq.(9) in our paper) can generally work well for all datasets in our experiments, which means during training roughly `70%` of edges will be kept (kind of still large). This is because GSAT doesn't try to provide interpretability by finding a small/sparse subgraph of the original input graph, which is what previous works normally do and will hurt performance significantly for inhrently interpretable models (as shown in Fig. 7 in the paper). By contrast, GSAT provides interpretability by pushing the critical edges to have relatively lower stochasticity during training.
 
@@ -112,7 +110,7 @@ To make good predictions (minimize the cross-entropy loss), GSAT will push the a
 <p align="center"><em>Figure 2.</em> An example of the learned attention weights.</p>
 
 
-# Reference
+## Reference
 
 If you find our paper and repo useful, please cite our paper:
 ```

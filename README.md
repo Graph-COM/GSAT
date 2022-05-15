@@ -96,13 +96,13 @@ All settings can be found in `./src/configs`.
 
 # FAQ
 #### Does GSAT encourage sparsity?
-No, GSAT doesn't encourage generating sparse subgraphs. We find `r = 0.7` (Eq.(9) in our paper) can generally work well for all datasets in our experiments, which means during training roughly `70%` of edges will be kept (kind of still dense). This is because GSAT doesn't try to provide interpretability by finding a small/sparse subgraph of the original input graph (this is what previous works normally do). Instead, it provides interpretability by pushing the critical edges to have relatively lower stochasticity during training.
+No, GSAT doesn't encourage generating sparse subgraphs. We find `r = 0.7` (Eq.(9) in our paper) can generally work well for all datasets in our experiments, which means during training roughly `70%` of edges will be kept (kind of still large). This is because GSAT doesn't try to provide interpretability by finding a small/sparse subgraph of the original input graph, which is what previous works normally do and will hurt performance significantly for inhrently interpretable models (as shown in Fig. 7 in the paper). By contrast, GSAT provides interpretability by pushing the critical edges to have relatively lower stochasticity during training.
 
 #### How to choose the value of `r`?
 A grid search in `[0.5, 0.6, 0.7, 0.8, 0.9]` is recommended, but `r = 0.7` is a good starting point. Note that in practice we would decay the value of `r` gradually during training from `0.9` to the chosen value.
 
 #### `p` or `α` in Eq.(9)?
-Recall in Fig. 1, `p` is the probability of dropping an edge, while `α` is the sampled result from `Bern(p)`. In our provided implementation, as an empirical choice, `α` is used to implement Eq.(9). We find that when `α` is used it may provide more regularization and makes the model more robust to hyperparameters. Nonetheless, using `p` can achieve the same performance, but it needs some more tuning.
+Recall in Fig. 1, `p` is the probability of dropping an edge, while `α` is the sampled result from `Bern(p)`. In our provided implementation, as an empirical choice, `α` is used to implement Eq.(9) (the Gumbel-softmax trick makes `α` essentially continuous in practice). We find that when `α` is used it may provide more regularization and makes the model more robust to hyperparameters. Nonetheless, using `p` can achieve the same performance, but it needs some more tuning.
 
 #### Can you show an example of how GSAT works?
 Below we show an example from the `ba_2motifs` dataset, which is to distinguish five-node cycle motifs (left) and house motifs (right).

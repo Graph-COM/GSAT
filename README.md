@@ -1,4 +1,4 @@
-# GSAT
+# Graph Stochastic Attention (GSAT)
 The official implementation of Graph Stochastic Attention (GSAT) for our paper: [Interpretable and Generalizable Graph Learning via Stochastic Attention Mechanism](https://arxiv.org/abs/2201.12987), to appear in ICML 2022.
 
 ## Introduction

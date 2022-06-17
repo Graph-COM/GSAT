@@ -50,7 +50,7 @@ We provide examples with minimal code to run GSAT in `./example/example.ipynb`. 
 It should be able to run on other datasets as well, but some hard-coded hyperparameters might need to be changed accordingly. To reproduce results for other datasets, please follow the instructions in the following section.
 
 ## Reproduce Results
-We provide the source code to reproduce the results in our paper. The results of GSAT can be reproduced by running `run_gsat.py`. To reproduce GSAT*, one needs to run `pretrain_clf.py` first and change the configuration file accordingly (`from_scratch: false`).
+We provide the source code to reproduce the results in our paper. The results of GSAT can be reproduced by running `run_gsat.py`. To reproduce GSAT*, one needs to change the configuration file accordingly (`from_scratch: false`).
 
 To pre-train a classifier:
 ```

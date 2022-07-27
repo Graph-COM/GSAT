@@ -31,12 +31,12 @@ This work addresses those issues by designing an inherently interpretable model.
 The rationale of GSAT is to inject stochasticity when learning attention. Specifically, as shown in Fig 2, the task is to detect if there exists a five-node-circle in the input graph, so edges with pink end nodes are the critical edges for this task. The main idea of GSAT is the following:
 1. **<ins>A regularizer</ins>** is used to encourage high randomness, i.e. low sampling probability, say `0.7`.
     - In this case, every critical edge may be dropped `30%` of the time.
-    - Whenever a critical edge is dropped, it may directly flip model predictions and incur a huge classification loss.
-2. Driven by the **<ins>classification loss</ins>**, critical edges learn to be with low randomness, i.e. high sampling probability, say `1.0`.
-    - With high sampling probabilities, the critical edges are more likely to be kept during training.
+    - Whenever a critical edge is dropped, it may flip model predictions and incur a huge classification loss.
+2. Driven by the **<ins>classification loss</ins>**, critical edges learn to be with low randomness, i.e. high sampling probability.
+    - With high sampling probabilities (e.g. `1.0`), the critical edges are more likely to be kept during training.
 3. The part with **<ins> less randomness</ins>** is the underlying critical data patterns captured by GSAT.
 
-To implement the above mechanism, a proper regularizer is needed. As the goal is to control randomness, from an information-theoretic point of view it's to control the amount of information in $G$, so the information bottleneck (IB) principle can be utilized, which helps to provide guaranteed OOD generalizability and interpretability, see `Theorem. 4.1.` in the paper.
+To implement the above mechanism, a proper regularizer is needed. As the goal is to control randomness, from an information-theoretic point of view it's to control the amount of information in $G$. So, the information bottleneck (IB) principle can be utilized, which helps to provide guaranteed OOD generalizability and interpretability, see `Theorem. 4.1.` in the paper.
 
 <p align="center"><img src="./data/rationale.png" width=85% height=85%></p>
 <p align="center"><em>Figure 2.</em> The rationale of GSAT.</p>
@@ -47,6 +47,7 @@ We have tested our code on `Python 3.9` with `PyTorch 1.10.0`, `PyG 2.0.3` and `
 Clone the repository:
 ```
 git clone https://github.com/Graph-COM/GSAT.git
+cd GSAT
 ```
 
 Create a virtual environment:

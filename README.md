@@ -10,17 +10,14 @@
     <a href="https://icml.cc/media/PosterPDFs/ICML%202022/a8acc28734d4fe90ea24353d901ae678.png"> <img src="https://img.shields.io/badge/Poster-grey?logo=airplayvideo&logoColor=white" alt="Poster"></a> -->
 </p>
 
-**Blog ([English](https://towardsdatascience.com/graph-machine-learning-icml-2022-252f39865c70#be75:~:text=and%20inductive%20settings.-,%E2%9E%A1%EF%B8%8F%20Miao%20et%20al,-take%20another%20perspective) - [中文](https://mp.weixin.qq.com/s/aP-XBqFLV0x8h9rtOKU_yg))** |
-**[Video](https://icml.cc/virtual/2022/spotlight/17430)** |
-**[Slides](https://icml.cc/media/icml-2022/Slides/17430.pdf)** |
-**[Poster](https://icml.cc/media/PosterPDFs/ICML%202022/a8acc28734d4fe90ea24353d901ae678.png)**
+**Blog ([English](https://towardsdatascience.com/graph-machine-learning-icml-2022-252f39865c70#be75:~:text=and%20inductive%20settings.-,%E2%9E%A1%EF%B8%8F%20Miao%20et%20al,-take%20another%20perspective) - [中文](https://mp.weixin.qq.com/s/aP-XBqFLV0x8h9rtOKU_yg))**
 
 This repository contains the official implementation of GSAT as described in the paper: [Interpretable and Generalizable Graph Learning via Stochastic Attention Mechanism](https://arxiv.org/abs/2201.12987) (ICML 2022) by Siqi Miao, Mia Liu, and Pan Li.
 
 ## Introduction
 Commonly used attention mechanisms have been shown to be unable to provide reliable interpretation for graph neural networks (GNNs). So, most previous works focus on developing post-hoc interpretation methods for GNNs.
 
-This work first shows that post-hoc methods suffer from several fundamental issues, such as underfitting the subgraph $G_S$ and overfitting the original input graph $G$. Thus, they are essentially good at checking feature sensitivity but can hardly provide trustworthy interpretation for GNNs if the goal is to extract effective patterns from the data (which should have been the most interesting goal).
+This work shows that post-hoc methods suffer from several fundamental issues, such as underfitting the subgraph $G_S$ and overfitting the original input graph $G$. Thus, they are essentially good at checking feature sensitivity but can hardly provide trustworthy interpretation for GNNs if the goal is to extract effective patterns from the data (which should have been the most interesting goal).
 
 This work addresses those issues by designing an inherently interpretable model. The key idea is to jointly train both the predictor and the explainer with a carefully designed **Graph Stochastic Attention (GSAT)** mechanism. With certain assumptions, GSAT can provide guaranteed  out-of-distribution generalizability and guaranteed inherent interpretability, which makes sure GSAT doesn't suffer from those issues. Fig. 1 shows the architecture of GSAT.
 
@@ -28,7 +25,7 @@ This work addresses those issues by designing an inherently interpretable model.
 <p align="center"><em>Figure 1.</em> The architecture of GSAT.</p>
 
 ## Rationale of GSAT
-The rationale of GSAT is to inject stochasticity when learning attention. Specifically, as shown in Fig 2, the task is to detect if there exists a five-node-circle in the input graph, so edges with pink end nodes are the critical edges for this task. The main idea of GSAT is the following:
+The rationale of GSAT is to inject stochasticity when learning attention. For example, Fig 2 shows a task to detect if there exists a five-node-circle in the input graph, so edges with pink end nodes are the critical edges for this task. The main idea of GSAT is the following:
 1. **<ins>A regularizer</ins>** is used to encourage high randomness, i.e. low sampling probability, say `0.7`.
     - In this case, every critical edge may be dropped `30%` of the time.
     - Whenever a critical edge is dropped, it may flip model predictions and incur a huge classification loss.
@@ -74,7 +71,7 @@ pip install -r requirements.txt
 ## Run Examples
 We provide examples with minimal code to run GSAT in `./example/example.ipynb`. We have tested the provided examples on `Ba-2Motifs (GIN)`, `Mutag (GIN)`  and `OGBG-Molhiv (PNA)`. Yet, to implement GSAT* one needs to load a pre-trained model first in the provided example. Also try     <a href="https://colab.research.google.com/drive/1t0_4BxEJ0XncyYvn_VyEQhxwNMvtSUNx?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Colab"></a> to play with `example.ipynb` in Colab.
 
-It should be able to run on other datasets as well, but some hard-coded hyperparameters might need to be changed accordingly, see `./src/configs.` for all hyperparameter settings. To directly reproduce results for other datasets, please follow the instructions in the following section.
+It should be able to run on other datasets as well, but some hard-coded hyperparameters might need to be changed accordingly, see `./src/configs` for all hyperparameter settings. To directly reproduce results for other datasets, please follow the instructions in the following section.
 
 ## Reproduce Results
 We provide the source code to reproduce the results in our paper. The results of GSAT can be reproduced by running `run_gsat.py`. To reproduce GSAT*, one needs to first change the configuration file accordingly (`from_scratch: false`).
@@ -130,11 +127,12 @@ All settings can be found in `./src/configs`.
 #### Does GSAT encourage sparsity?
 No, GSAT doesn't encourage generating sparse subgraphs. We find `r = 0.7` (Eq.(9) in our paper) can generally work well for all datasets in our experiments, which means during training roughly `70%` of edges will be kept (kind of still large). This is because GSAT doesn't try to provide interpretability by finding a small/sparse subgraph of the original input graph, which is what previous works normally do and will hurt performance significantly for inhrently interpretable models (as shown in Fig. 7 in the paper). By contrast, GSAT provides interpretability by pushing the critical edges to have relatively lower stochasticity during training.
 
-#### How to choose the value of `r`?
-A grid search in `[0.5, 0.6, 0.7, 0.8, 0.9]` is recommended, but `r = 0.7` is a good starting point. Note that in practice we would decay the value of `r` gradually during training from `0.9` to the chosen value.
+#### How to tune the hyperparameters of GSAT?
+We recommend to tune `r` in `{0.5, 0.7}` and `info_loss_coef` in `{1.0, 0.1, 0.01}` based on validation classification performance. And `r=0.7` and `info_loss_coef=0.01` can be a good starting point.
+Note that in practice we would decay the value of `r` gradually during training from `0.9` to the chosen value.
 
 #### `p` or `α` to implement Eq. (9)?
-Recall in Fig. 1, `p` is the probability of dropping an edge, while `α` is the sampled result from `Bern(p)`. In our provided implementation, as an empirical choice, `α` is used to implement Eq.(9) (the Gumbel-softmax trick makes `α` essentially continuous in practice). We find that when `α` is used it may provide more regularization and makes the model more robust to hyperparameters. Nonetheless, using `p` can achieve the same performance, but it needs some more tuning.
+Recall in Fig. 1, `p` is the probability of dropping an edge, while `α` is the sampled result from `Bern(p)`. In our provided implementation, as an empirical choice, `α` is used to implement Eq.(9) (the Gumbel-softmax trick makes `α` essentially continuous in practice). We find that when `α` is used it may provide more regularization and make the model more robust to hyperparameters. Nonetheless, using `p` can achieve the same performance.
 
 #### How to sample $G_S$?
 In practice, we don't yield $G_S$ by doing $\alpha \odot A$ in Fig. 1, because based on the gumbel-softmax trick it's non-trivial to make this operation differentiable for message-passing-based neural networks (MPNNs). Instead, the learned attention will act on the message of the corresponding edge. Once the message of an edge is dropped, one can (roughly) believe that the corresponding edge is dropped in MPNNs, and this is like an approximation of $\alpha \odot A$.

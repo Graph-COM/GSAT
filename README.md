@@ -128,7 +128,7 @@ All settings can be found in `./src/configs`.
 No, GSAT doesn't encourage generating sparse subgraphs. We find `r = 0.7` (Eq.(9) in our paper) can generally work well for all datasets in our experiments, which means during training roughly `70%` of edges will be kept (kind of still large). This is because GSAT doesn't try to provide interpretability by finding a small/sparse subgraph of the original input graph, which is what previous works normally do and will hurt performance significantly for inhrently interpretable models (as shown in Fig. 7 in the paper). By contrast, GSAT provides interpretability by pushing the critical edges to have relatively lower stochasticity during training.
 
 #### How to tune the hyperparameters of GSAT?
-We recommend to tune `r` in `{0.5, 0.7}` and `info_loss_coef` in `{1.0, 0.1, 0.01}` based on validation classification performance. And `r=0.7` and `info_loss_coef=0.01` can be a good starting point.
+We recommend to tune `r` in `{0.5, 0.7}` and `info_loss_coef` in `{1.0, 0.1, 0.01}` based on validation classification performance. And `r = 0.7` and `info_loss_coef = 0.01` can be a good starting point.
 Note that in practice we would decay the value of `r` gradually during training from `0.9` to the chosen value.
 
 #### `p` or `α` to implement Eq. (9)?

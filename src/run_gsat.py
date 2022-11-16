@@ -1,4 +1,5 @@
 import yaml
+import scipy
 import numpy as np
 from tqdm import tqdm
 from pathlib import Path
@@ -7,7 +8,6 @@ from datetime import datetime
 
 import torch
 import torch.nn as nn
-from torch_sparse import transpose
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 from torch_geometric.utils import subgraph, is_undirected
 from torch_geometric.loader import DataLoader
@@ -76,7 +76,8 @@ class GSAT(nn.Module):
         if self.learn_edge_att:
             if is_undirected(data.edge_index):
                 nodesize = data.x.shape[0]
-                edge_att = (att + transpose(data.edge_index, att, nodesize, nodesize, coalesced=False)[1]) / 2
+                sp_csr = scipy.sparse.csr_matrix((torch.arange(att.shape[0]), (data.edge_index[0].cpu(), data.edge_index[1].cpu())), (nodesize, nodesize))
+                edge_att = (att + att[sp_csr[data.edge_index[1].tolist(), data.edge_index[0].tolist()].A1]) / 2
             else:
                 edge_att = att
         else:

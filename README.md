@@ -149,10 +149,10 @@ To make good predictions (minimize the cross-entropy loss), GSAT will push the a
 
 If you find our paper and repo useful, please cite our paper:
 ```bibtex
-@InProceedings{miao2022interpretable,
+@article{miao2022interpretable,
   title       = {Interpretable and Generalizable Graph Learning via Stochastic Attention Mechanism},
   author      = {Miao, Siqi and Liu, Mia and Li, Pan},
-  booktitle   = {ICML},
+  journal     = {International Conference on Machine Learning},
   year        = {2022}
 }
 ```

@@ -9,15 +9,16 @@ from datetime import datetime
 import torch
 import torch.nn as nn
 from torch.optim.lr_scheduler import ReduceLROnPlateau
-from torch_geometric.utils import subgraph, is_undirected
+from torch_sparse import transpose
 from torch_geometric.loader import DataLoader
+from torch_geometric.utils import subgraph, is_undirected
 from ogb.graphproppred import Evaluator
 from sklearn.metrics import roc_auc_score
 from rdkit import Chem
 
 from pretrain_clf import train_clf_one_seed
 from utils import Writer, Criterion, MLP, visualize_a_graph, save_checkpoint, load_checkpoint, get_preds, get_lr, set_seed, process_data
-from utils import get_local_config_name, get_model, get_data_loaders, write_stat_from_metric_dicts, init_metric_dict
+from utils import get_local_config_name, get_model, get_data_loaders, write_stat_from_metric_dicts, reorder_like, init_metric_dict
 
 
 class GSAT(nn.Module):
@@ -75,9 +76,9 @@ class GSAT(nn.Module):
 
         if self.learn_edge_att:
             if is_undirected(data.edge_index):
-                nodesize = data.x.shape[0]
-                sp_csr = scipy.sparse.csr_matrix((torch.arange(att.shape[0]), (data.edge_index[0].cpu(), data.edge_index[1].cpu())), (nodesize, nodesize))
-                edge_att = (att + att[sp_csr[data.edge_index[1].tolist(), data.edge_index[0].tolist()].A1]) / 2
+                trans_idx, trans_val = transpose(data.edge_index, att, None, None, coalesced=False)
+                trans_val_perm = reorder_like(trans_idx, data.edge_index, trans_val)
+                edge_att = (att + trans_val_perm) / 2
             else:
                 edge_att = att
         else:

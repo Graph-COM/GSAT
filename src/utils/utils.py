@@ -5,7 +5,7 @@ import networkx as nx
 from rdkit import Chem
 import matplotlib.pyplot as plt
 from torch_geometric.data import Data
-from torch_geometric.utils import to_networkx
+from torch_geometric.utils import to_networkx, sort_edge_index
 from torch.utils.tensorboard import SummaryWriter
 from torch.utils.tensorboard.summary import hparams
 
@@ -14,6 +14,15 @@ init_metric_dict = {'metric/best_clf_epoch': 0, 'metric/best_clf_valid_loss': 0,
                     'metric/best_clf_train': 0, 'metric/best_clf_valid': 0, 'metric/best_clf_test': 0,
                     'metric/best_x_roc_train': 0, 'metric/best_x_roc_valid': 0, 'metric/best_x_roc_test': 0,
                     'metric/best_x_precision_train': 0, 'metric/best_x_precision_valid': 0, 'metric/best_x_precision_test': 0}
+
+
+def reorder_like(from_edge_index, to_edge_index, values):
+    from_edge_index, values = sort_edge_index(from_edge_index, values)
+    ranking_score = to_edge_index[0] * (to_edge_index.max()+1) + to_edge_index[1]
+    ranking = ranking_score.argsort().argsort()
+    if not (from_edge_index[:, ranking] == to_edge_index).all():
+        raise ValueError("Edges in from_edge_index and to_edge_index are different, impossible to match both.")
+    return values[ranking]
 
 
 def process_data(data, use_edge_attr):

@@ -1,6 +1,6 @@
 <h1 align="center">Graph Stochastic Attention (GSAT)</h1>
 <p align="center">
-    <a href="https://arxiv.org/abs/2201.12987"><img src="https://img.shields.io/badge/-Paper-grey?logo=gitbook&logoColor=white" alt="Paper"></a>
+    <a href="https://arxiv.org/abs/2201.12987"><img src="https://img.shields.io/badge/-arXiv-grey?logo=gitbook&logoColor=white" alt="arXiv"></a>
     <a href="https://github.com/Graph-COM/GSAT"><img src="https://img.shields.io/badge/-Github-grey?logo=github" alt="Github"></a>
     <a href="https://proceedings.mlr.press/v162/miao22a.html"> <img alt="License" src="https://img.shields.io/static/v1?label=Pub&message=ICML%2722&color=blue"> </a>
     <a href="https://colab.research.google.com/drive/1t0_4BxEJ0XncyYvn_VyEQhxwNMvtSUNx?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Colab"></a>
@@ -17,6 +17,7 @@
 This repository contains the official implementation of GSAT as described in the paper: [Interpretable and Generalizable Graph Learning via Stochastic Attention Mechanism](https://arxiv.org/abs/2201.12987) (ICML 2022) by Siqi Miao, Mia Liu, and Pan Li.
 
 ## News
+- Mar. 15, 2023: Check out GSAT on [GOOD](https://github.com/divelab/GOOD) benchamrk with leaderboard [here](https://good.readthedocs.io/en/latest/leaderboard.html). GSAT (again) achieves multiple SOTA results on out-of-distribution generalization on the recent benchmark, while being highly interpretable!
 - Jan. 21, 2023: Check out our latest paper [Learnable Randomness Injection (LRI)](https://openreview.net/forum?id=6u7mf9s2A9) with code [here](https://github.com/Graph-COM/LRI), which is recently accepted to ICLR 2023! In LRI, we further generalize the idea of GSAT and propose four datasets with ground-truth interpretation labels from real-world scientific applications (instead of synthetic motif datasets to evaluate interpretability!).
 - Nov. 16, 2022: A bug was reported in the code when averaging edge attention weigts for undirected graphs, as pointed out by this [issue](https://github.com/Graph-COM/GSAT/issues/5). We have fixed this bug in the latest version of the code by this [PR](https://github.com/Graph-COM/GSAT/pull/8).
 

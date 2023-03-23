@@ -137,7 +137,7 @@ No, GSAT doesn't encourage generating sparse subgraphs. We find `r = 0.7` (Eq.(9
 
 #### How to tune the hyperparameters of GSAT?
 We recommend to tune `r` in `{0.5, 0.7}` and `info_loss_coef` in `{1.0, 0.1, 0.01}` based on validation classification performance. And `r = 0.7` and `info_loss_coef = 1.0` can be a good starting point.
-Note that in practice we would decay the value of `r` gradually during training from `0.9` to the chosen value.
+Note that in practice we would decay the value of `r` gradually during training from `0.9` to the chosen value. Given our empirical observation, the classification performance of GSAT should always be no worse than that yielded by ERM (Empirical Risk Minimization) training, when its hyperparameters are tuned properly.
 
 #### `p` or `α` to implement Eq. (9)?
 Recall in Fig. 1, `p` is the probability of dropping an edge, while `α` is the sampled result from `Bern(p)`. In our provided implementation, as an empirical choice, `α` is used to implement Eq.(9) (the Gumbel-softmax trick makes `α` essentially continuous in practice). We find that when `α` is used it may provide more regularization and make the model more robust to hyperparameters. Nonetheless, using `p` can achieve the same performance.

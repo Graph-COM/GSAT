@@ -165,7 +165,7 @@ def visualize_results(gsat, all_viz_set, test_set, num_viz_samples, dataset_name
                 raise NotImplementedError
 
             node_subset = data.batch == i
-            _, edge_mask = subgraph(node_subset, data.edge_index, edge_attr=batch_att)
+            _, edge_mask = subgraph(node_subset.cpu(), data.edge_index.cpu(), edge_attr=batch_att)
 
             node_label = viz_set[i].node_label.reshape(-1) if viz_set[i].get('node_label', None) is not None else torch.zeros(viz_set[i].x.shape[0])
             visualize_a_graph(viz_set[i].edge_index, edge_mask, node_label, dataset_name, axes[class_idx, i], norm=True, mol_type=mol_type, coor=coor)
